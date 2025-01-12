@@ -11,11 +11,11 @@ import { CircleAlert, Loader2 } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from "@hookform/resolvers/zod";
-import { addDoc, doc, getFirestore, setDoc } from 'firebase/firestore'
+import { addDoc, collection, doc, getFirestore, setDoc } from 'firebase/firestore'
 import addData from '@/firebase/firestore/addData'
 import { useToast } from '@/hooks/use-toast'
 import { ToastAction } from '@radix-ui/react-toast'
-import firebase_app from '@/firebase/firebaseConfig'
+import firebase_app, { db } from '@/firebase/firebaseConfig'
 
 const SignUpSchema = z.object({
   name: z.string().nonempty({
@@ -79,12 +79,9 @@ const SignUpButton = () => {
     const name = data.name
 
     if (result.user) {
-      const db = getFirestore(firebase_app)
       const docRef = await addDoc(collection(db, "users"), {
-        uid: result.user.uid,
         name: name,
-        email: data.email,
-        createdAt: new Date()
+        id: result.user.uid,
       })
       setLoading(false)
       return router.push("/home")

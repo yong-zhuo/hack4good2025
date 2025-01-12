@@ -8,12 +8,13 @@ const CartLink = () => {
 
   const router = useRouter()
 
+
   const handleClick = () => {
-    router.push('/cart')
-  }
+    router.push('/cart');
+  };
 
   return (
-    <Button variant="link" className="text-md text-[#FBF5E5]" onClick={handleClick}>Cart</Button>
+    <Button variant="link" className="text-md text-[#FBF5E5] -p-1" onClick={handleClick}>Cart</Button>
   )
 }
 

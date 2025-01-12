@@ -1,8 +1,10 @@
 'use client'
 import { HomeNavbar } from '@/components/homenavbar/HomeNavbar';
+
 import { useAuthContext } from '@/context/AuthContext';
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+
 
 const layout = ({ children }) => {
   const router = useRouter();
@@ -15,7 +17,12 @@ const layout = ({ children }) => {
   }, [user, loading]);
 
   return (
-    <div className='min-h-screen bg-[#FBF5E5]'><HomeNavbar />{children}</div>
+
+    <div className='flex flex-col min-h-screen bg-[#FBF5E5]'>
+      <HomeNavbar />
+      <div className='h-full mx-auto container mt-20'>{children}</div>
+    </div>
+
   )
 }
 
