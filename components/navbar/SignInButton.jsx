@@ -19,62 +19,63 @@ const SignInSchema = z.object({
   }),
   password: z.string().min(6, {
     message: "Password must be at least 6 characters"
-  })})
+  })
+})
 
 const SignInButton = () => {
 
-    const {
-        register,
-        handleSubmit,
-        formState: { errors }
-    } = useForm({
-        resolver: zodResolver(SignInSchema)
-    })
-    const router = useRouter();
-    const toast = useToast()
-    const [loading, setLoading] = useState(false);
-    const [open, setOpen] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    resolver: zodResolver(SignInSchema)
+  })
+  const router = useRouter();
+  const toast = useToast()
+  const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
 
-    const handleForm = async (data) => {
-     
-        const { result, error } = await signIn(data.email, data.password);
+  const handleForm = async (data) => {
 
-        if (error) {
-            toast({
-              variant: "destructive",
-              title: "Invalid email or password",
-              description: "Please check your email and password"
-            })
-            setLoading(false)
-            setOpen(false)
-            return
-        }
+    const { result, error } = await signIn(data.email, data.password);
 
-        if (result.user) {
-          setLoading(false)
-          return router.push("/home")
-        }
-
+    if (error) {
+      toast({
+        variant: "destructive",
+        title: "Invalid email or password",
+        description: "Please check your email and password"
+      })
+      setLoading(false)
+      setOpen(false)
+      return
     }
+
+    if (result.user) {
+      setLoading(false)
+      return router.push("/home")
+    }
+
+  }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
-            <Button variant="outline" className="text-slate-500 font-bold shadow-lg hover:-translate-y-1 transition">Sign In</Button>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
+      <DialogTrigger asChild>
+        <Button variant="outline" className="text-slate-500 font-bold shadow-lg hover:-translate-y-1 transition">Sign In</Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle className="text-2xl">Sign In</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit(handleForm)}>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-          <div className='flex flex-col items-start col-span-4 gap-y-2'>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <div className='flex flex-col items-start col-span-4 gap-y-2'>
                 <div className='flex items-center justify-between w-full'>
-                    <Label htmlFor="email" className="text-right">
-                      Email
-                    </Label>
-                    {errors.email && <span className="text-red-500 text-xs flex items-center justify-center"><CircleAlert height={12}/>{errors.email.message}</span>}
+                  <Label htmlFor="email" className="text-right">
+                    Email
+                  </Label>
+                  {errors.email && <span className="text-red-500 text-xs flex items-center justify-center"><CircleAlert height={12} />{errors.email.message}</span>}
                 </div>
                 <Input
                   id="email"
@@ -82,13 +83,13 @@ const SignInButton = () => {
                   {...register("email")}
                   type="email"
                 />
-            </div>
-            <div className='flex flex-col items-start col-span-4 gap-y-2'>
+              </div>
+              <div className='flex flex-col items-start col-span-4 gap-y-2'>
                 <div className='flex items-center justify-between w-full'>
-                    <Label htmlFor="password" className="text-right">
-                      Password
-                    </Label>
-                    {errors.password && <span className="text-red-500 text-xs flex items-center justify-center"><CircleAlert height={12}/>{errors.password.message}</span>}
+                  <Label htmlFor="password" className="text-right">
+                    Password
+                  </Label>
+                  {errors.password && <span className="text-red-500 text-xs flex items-center justify-center"><CircleAlert height={12} />{errors.password.message}</span>}
                 </div>
                 <Input
                   id="password"
@@ -96,12 +97,12 @@ const SignInButton = () => {
                   {...register("password")}
                   type="password"
                 />
+              </div>
             </div>
           </div>
-        </div>
-        <DialogFooter>
-          <Button type="submit">Login</Button>
-        </DialogFooter>
+          <DialogFooter>
+            <Button type="submit">Login</Button>
+          </DialogFooter>
         </form>
       </DialogContent>
     </Dialog>

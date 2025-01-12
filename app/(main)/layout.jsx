@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react'
 
 const layout = () => {
-  const user  = useAuthContext();
+  const user = useAuthContext();
   const router = useRouter();
 
   useEffect(() => {
