@@ -6,11 +6,14 @@ import { useRouter } from 'next/navigation'
 
 const CartLink = () => {
 
-    const router = useRouter()
+  const router = useRouter()
 
+  const handleClick = () => {
+    router.push('/cart')
+  }
 
   return (
-    <Button variant="link" className="text-md text-[#FBF5E5]" onClick={router.push('/cart')}>Cart</Button>
+    <Button variant="link" className="text-md text-[#FBF5E5]" onClick={handleClick}>Cart</Button>
   )
 }
 

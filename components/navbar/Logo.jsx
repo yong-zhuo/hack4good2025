@@ -1,8 +1,8 @@
-'use server'
+'use client'
 
 import React from 'react'
 
-const Logo = async () => {
+const Logo = () => {
   return (
     <div className='items-center font-sans font-extrabold text-xl text-[#FBF5E5]'>Marketplace</div>
   )

@@ -20,21 +20,19 @@ export const AuthContextProvider = ({
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-
-            if (user) {
-                setUser(user);
+        const unsubscribe = onAuthStateChanged(auth, (userContext) => {
+            if (userContext) {
+                setUser(userContext);
             } else {
                 setUser(null);
             }
             setLoading(false);
         });
-
         return () => unsubscribe();
-    }, []);
+    }, [user]);
 
     return (
-        <AuthContext.Provider value={{ user }}>
+        <AuthContext.Provider value={{ user, loading }}>
             {children}
         </AuthContext.Provider>
     );
