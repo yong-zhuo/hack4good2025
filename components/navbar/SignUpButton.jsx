@@ -94,18 +94,18 @@ const SignUpButton = () => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="link" className="text-white">Sign Up</Button>
+        <Button variant="link" className="text-[#FBF5E5]">Sign Up</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle className="text-2xl">Sign Up</DialogTitle>
+          <DialogTitle className="text-2xl text-[#3E5879]">Sign Up</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit(handleForm)}>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
               <div className='flex flex-col items-start col-span-4 gap-y-2'>
                 <div className='flex items-center justify-between w-full'>
-                  <Label htmlFor="name" className="text-right">
+                  <Label htmlFor="name" className="text-right text-[#3E5879]">
                     Name
                   </Label>
                   {errors.name && <span className="text-red-500 text-xs flex items-center justify-center"><CircleAlert height={12} />{errors.name.message}</span>}
@@ -119,21 +119,21 @@ const SignUpButton = () => {
 
               <div className='flex flex-col items-start col-span-4 gap-y-2'>
                 <div className='flex items-center justify-between w-full'>
-                  <Label htmlFor="email" className="text-right">
+                  <Label htmlFor="email" className="text-right text-[#3E5879]">
                     Email
                   </Label>
                   {errors.email && <span className="text-red-500 text-xs flex items-center justify-center"><CircleAlert height={12} />{errors.email.message}</span>}
                 </div>
                 <Input
                   id="email"
-                  className="col-span-3"
+                  className="col-span-3 "
                   {...register("email")}
                   type="email"
                 />
               </div>
               <div className='flex flex-col items-start col-span-4 gap-y-2'>
                 <div className='flex items-center justify-between w-full'>
-                  <Label htmlFor="password" className="text-right">
+                  <Label htmlFor="password" className="text-right text-[#3E5879]">
                     Password
                   </Label>
                   {errors.password && <span className="text-red-500 text-xs flex items-center justify-center"><CircleAlert height={12} />{errors.password.message}</span>}
@@ -147,7 +147,7 @@ const SignUpButton = () => {
               </div>
               <div className='flex flex-col items-start col-span-4 gap-y-2'>
                 <div className='flex items-center justify-between w-full'>
-                  <Label htmlFor="confirmPassword" className="text-left">
+                  <Label htmlFor="confirmPassword" className="text-left text-[#3E5879]">
                     Confirm Password
                   </Label>
                   {errors.confirmPassword && <span className="text-red-500 text-xs flex items-center justify-center"><CircleAlert height={12} />{errors.confirmPassword.message}</span>}
@@ -162,7 +162,7 @@ const SignUpButton = () => {
             </div>
           </div>
           <DialogFooter>
-            <Button type="submit" disabled={loading}>{loading ? <Loader2 className="animate-spin" /> : null} Sign Up</Button>
+            <Button type="submit" disabled={loading} className="bg-[#3E5879]">{loading ? <Loader2 className="animate-spin" /> : null} Sign Up</Button>
           </DialogFooter>
         </form>
       </DialogContent>
