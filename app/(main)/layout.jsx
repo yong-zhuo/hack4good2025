@@ -18,7 +18,7 @@ const layout = ({ children }) => {
 
   return (
 
-    <div className='flex flex-col min-h-screen bg-[#FBF5E5]'>
+    <div className='flex flex-col min-h-screen bg-[#FBF5E5] flex-grow'>
       <HomeNavbar />
       <div className='h-full mx-auto container mt-20'>{children}</div>
     </div>

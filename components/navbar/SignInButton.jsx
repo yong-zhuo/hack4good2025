@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog'
 import { Button } from '../ui/button'
 import { Label } from '../ui/label'
@@ -12,6 +12,7 @@ import { set, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useToast } from '@/hooks/use-toast'
 import { CircleAlert, Loader2 } from 'lucide-react'
+import { useAuthContext } from '@/context/AuthContext'
 
 const SignInSchema = z.object({
   email: z.string().email({
@@ -32,6 +33,16 @@ const SignInButton = () => {
     resolver: zodResolver(SignInSchema)
   })
   const router = useRouter();
+
+
+  const { user, authLoading } = useAuthContext();
+
+  useEffect(() => {
+    if (!authLoading && user) {
+      router.push('/home');
+    }
+  }, [user, authLoading]);
+
   const { toast } = useToast()
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);

@@ -1,34 +1,17 @@
-'use client'
+'use server'
 
 import { db } from '@/firebase/firebaseConfig'
 import { collection, getDocs } from 'firebase/firestore'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import ProductCard from './ProductCard'
 
-const ProductCardList = () => {
-    const [products, setProducts] = useState([])
-
-    useEffect(() => {
-        const fetchProducts = async () => {
-            const productsCollection = collection(db, 'products')
-            const productsSnapshot = await getDocs(productsCollection)
-            const productsList = productsSnapshot.docs.map(doc => ({
-                id: doc.id,
-                ...doc.data()
-            }));
-            setProducts(productsList);
-        }
-
-        fetchProducts();
-    }, [])
-
-
+const ProductCardList = async ({productList}) => {
 
     return (
-        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
-            {products.map(product => (
+        <div className='w-fit mx-auto grid grid-cols-1 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-y-20 gap-x-14 mt-10 mb-5 items-center justify-center '>
+            {productList.map(product => (
                 <div key={product.id}>
-                    <ProductCard name={product.name} image={product.image} price={product.price}/>
+                    <ProductCard name={product.name} image={product.image} price={product.price} productid={product.id} />
                 </div>
             ))}
         </div>

@@ -9,6 +9,8 @@ export default {
   theme: {
   	extend: {
   		colors: {
+			'pri': '#3E5879',
+			'sec': '#FBF5E5',
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
