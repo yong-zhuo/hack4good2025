@@ -36,7 +36,7 @@ const OrderDashboard = async () => {
 
     return (
         <div>
-            <div className='text-6xl font-extrabold text-left mb-8 mt-4 text-pri'>Orders</div>
+            <div className='text-6xl font-bold text-left mb-8 mt-4 text-pri'>Orders</div>
             <Tabs defaultValue="All">
                 <TabsList className="grid w-full grid-cols-4 bg-white text-black shadow border-b-2">
                     <TabsTrigger value="All" className="data-[state=active]:bg-slate-500 rounded-md data-[state=active]:text-white transition">All</TabsTrigger>

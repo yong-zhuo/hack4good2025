@@ -13,9 +13,10 @@ export const HomeNavbar = () => {
         <Logo />
         <div className='items-center justify-center flex flex-row gap-4'>
           <Link href="/home" className='hover:underline text-[#FBF5E5]'>Home</Link>
-          <Link href="/order" className='hover:underline text-[#FBF5E5]'>Orders</Link>
-          <Link href="/home" className='hover:underline text-[#FBF5E5]'>Account</Link>
           <CartLink />
+          <Link href="/order" className='hover:underline text-[#FBF5E5]'>Orders</Link>
+          <Link href="/account" className='hover:underline text-[#FBF5E5]'>Account</Link>
+          
           <SignOutButton />
         </div>
       </div>

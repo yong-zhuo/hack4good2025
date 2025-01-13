@@ -13,13 +13,13 @@ const page = async ({ params }) => {
 
   const fetchProduct = async () => {
     const productDoc = doc(db, 'products', slug);
-    const product = await getDoc(productDoc)
+    const productSnapshot = await getDoc(productDoc)
 
-    if (!product.exists()) {
+    if (!productSnapshot.exists()) {
       notFound()
     }
 
-    return product.data()
+    return {id: productSnapshot.id, ...productSnapshot.data()}
   }
 
   const product = await fetchProduct()
@@ -39,7 +39,7 @@ const page = async ({ params }) => {
           <h2 className="font-medium text-2xl">${product.price}</h2>
         </div>
         <div className="h-[2px] bg-pri bg-opacity-35" />
-        <Add productId={product.id} stockQuantity={product.stockQuantity} />
+        <Add product={product} />
         <div className="h-[2px] bg-pri bg-opacity-35" />
       </div>
     </div>
