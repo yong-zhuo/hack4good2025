@@ -1,6 +1,6 @@
 'use server'
 
-import { AspectRatio } from '@/components/ui/aspect-ratio'
+import Add from '@/components/productpage/Add'
 import { db } from '@/firebase/firebaseConfig'
 import { collection, doc, getDoc } from 'firebase/firestore'
 import { redirect } from 'next/dist/server/api-utils'
@@ -34,12 +34,13 @@ const page = async ({ params }) => {
           <h1 className="text-4xl font-medium">{product.name}</h1>
           <p className="text-gray-500">{product.description}</p>
         </div>
-        <div className="h-[1px] bg-pri" />
+        <div className="h-[2px] bg-pri bg-opacity-35" />
         <div>
           <h2 className="font-medium text-2xl">${product.price}</h2>
-          <p className="text-gray-500">{product.quantity == 0 ? 'Out of stock' : `${product.quantity} left`}</p>
         </div>
-        <div className="h-[1px] bg-pri" />
+        <div className="h-[2px] bg-pri bg-opacity-35" />
+        <Add productId={product.id} stockQuantity={product.quantity} />
+        <div className="h-[2px] bg-pri bg-opacity-35" />
       </div>
     </div>
   )
