@@ -39,7 +39,7 @@ const page = async ({ params }) => {
           <h2 className="font-medium text-2xl">${product.price}</h2>
         </div>
         <div className="h-[2px] bg-pri bg-opacity-35" />
-        <Add productId={product.id} stockQuantity={product.quantity} />
+        <Add productId={product.id} stockQuantity={product.stockQuantity} />
         <div className="h-[2px] bg-pri bg-opacity-35" />
       </div>
     </div>
