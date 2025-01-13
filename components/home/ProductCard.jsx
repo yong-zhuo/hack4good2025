@@ -3,7 +3,7 @@ import React from 'react'
 const ProductCard = ({ name, price, productid, image }) => {
     const productUrl = `/product/${productid}`
     return (
-        <div className="relative m-10 flex w-72 max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md">
+        <div className="relative m-10 flex w-72 max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md ">
             <a className="relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl" href={productUrl}>
                 <img className="object-cover w-full" src={image} alt={name} />
             </a>

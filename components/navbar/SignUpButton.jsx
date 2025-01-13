@@ -79,9 +79,10 @@ const SignUpButton = () => {
     const name = data.name
 
     if (result.user) {
-      const docRef = await addDoc(collection(db, "users"), {
+      const userDocRef = doc(db, 'users', result.user.uid);
+      await setDoc(userDocRef, {
         name: name,
-        id: result.user.uid,
+        email: data.email,
       })
       setLoading(false)
       return router.push("/home")
