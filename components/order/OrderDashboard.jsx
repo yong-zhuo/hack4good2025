@@ -6,13 +6,11 @@ import OrderCardList from './OrderCardList'
 import { db } from '@/firebase/firebaseConfig'
 import { collection, getDocs } from 'firebase/firestore'
 
-const OrderDashboard = async () => {
+const OrderDashboard = async ({ userid }) => {
 
     async function fetchOrders() {
         const ordersCollection = collection(db, 'orders')
-        const productsCollection = collection(db, 'products')
         const ordersSnapshot = await getDocs(ordersCollection)
-        const productsSnapshot = await getDocs(productsCollection)
         const ordersList = ordersSnapshot.docs.map(doc => (
             {
                 id: doc.id,
@@ -26,11 +24,15 @@ const OrderDashboard = async () => {
         return ordersList.filter(order => order.status === status)
     }
 
-    const allProducts = await fetchOrders();
+    function filterProducts(ordersList, userid) {
+        return ordersList.filter(order => order.userid === userid)
+    }
+    const allOrders = await fetchOrders();
+    const allProducts = filterProducts(allOrders, userid);
     const [pendingProducts, completedProducts, cancelledProducts] = await Promise.all([
-        filterOrders(allProducts, 'pending'),
-        filterOrders(allProducts, 'completed'),
-        filterOrders(allProducts, 'cancelled')
+        filterOrders(allProducts, 'Pending'),
+        filterOrders(allProducts, 'Completed'),
+        filterOrders(allProducts, 'Cancelled')
     ]);
 
 
