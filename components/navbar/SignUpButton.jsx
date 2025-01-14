@@ -83,6 +83,7 @@ const SignUpButton = () => {
       await setDoc(userDocRef, {
         name: name,
         email: data.email,
+        balance: 0
       })
       setLoading(false)
       return router.push("/home")
