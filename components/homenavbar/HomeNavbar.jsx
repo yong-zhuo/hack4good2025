@@ -16,6 +16,7 @@ export const HomeNavbar = () => {
           <CartLink />
           <Link href="/order" className='hover:underline text-[#FBF5E5]'>Orders</Link>
           <Link href="/account" className='hover:underline text-[#FBF5E5]'>Account</Link>
+          <Link href="/vouchers" className='hover:underline text-[#FBF5E5]'>Vouchers</Link>
           
           <SignOutButton />
         </div>
