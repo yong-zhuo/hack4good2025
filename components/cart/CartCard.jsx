@@ -64,7 +64,7 @@ const CartCard = ({ product, userId}) => {
               <Loader2 className='text-gray-500 animate-spin' height={16}  />
             ) : `${product.price * product.selectedQuantity} points`}
           </div>
-          <RemoveItemButton/>
+          <RemoveItemButton userId={userId} productId={product.id}/>
         </div>
       </div>
       <div className="border-b border-gray-300 my-4"/>

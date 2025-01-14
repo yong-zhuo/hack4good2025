@@ -1,4 +1,4 @@
-import { deleteDoc, doc, getDoc, updateDoc } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, updateDoc } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 
 export async function getProductStockQuantity(productId) {
@@ -31,10 +31,11 @@ export async function setProductQuantity(userId, productId, quantity) {
     }
 }
 
-export async function sendRequest(userId, cartItems, cartId) {
+export async function sendRequest(userId, cartItems) {
     try {
-        const cartItemRef = doc(db, 'users', userId, 'cart', productId);
-        await updateDoc(cartItemRef, { requested: true });
+        const orderPromises = cartItems.map((item) => addItemToOrder(item, userId));
+        await Promise.all(orderPromises);
+        await deleteCart(userId);
         return { success: true };
     } catch (error) {
         console.error('Error sending request:', error);
@@ -42,7 +43,7 @@ export async function sendRequest(userId, cartItems, cartId) {
     }
 }
 
-async function addItemToOrder(product) {
+async function addItemToOrder(product, userId) {
     try {
         const orderRef = collection(db, 'orders');
         var today = new Date();
@@ -51,16 +52,17 @@ async function addItemToOrder(product) {
         const yyyy = today.getFullYear();
 
         today = mm + '/' + dd + '/' + yyyy;
-        const product = 
+        const item = 
         {   name: product.name, 
             price: product.price, 
             image: product.image, 
             description: product.description,
             date: today,
             quantity: product.selectedQuantity,
-            status: 'pending'
+            status: 'Pending',
+            userid: userId
         };
-        await addDoc(orderRef, product);
+        await addDoc(orderRef, item);
         console.log('Product added to order successfully!');
         return { success: true };
     } catch (error) {
@@ -69,10 +71,13 @@ async function addItemToOrder(product) {
     }
 }
 
-async function deleteCart(userId, cartId) {
+async function deleteCart(userId) {
     try {
-        const cartRef = doc(db, 'users', userId, 'cart', cartId);
-        await deleteDoc(cartRef);
+        const cartCollectionRef = collection(db, 'users', userId, 'cart');
+        const cartSnapshot = await getDocs(cartCollectionRef);
+    
+        const deletePromises = cartSnapshot.docs.map((doc) => deleteDoc(doc.ref));
+        await Promise.all(deletePromises);
         console.log('Cart deleted successfully!');
         return { success: true };
     } catch (error) {

@@ -54,7 +54,7 @@ const page = async ({ params }) => {
               <p className='font-bold translate-x-4 text-3xl text-orange-400'>Total Price: {totalPrice} points</p>
             </div>
             <div className='flex justify-end -translate-x-4'>
-              <CheckoutButton />
+              <CheckoutButton userId={slug} cartItems={cartItems} />
             </div>
           </CardFooter>
         </Card>
