@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Marketplace",
-  description: "A marketplace for requesting items",
+  title: "Minimart@MWH",
+  description: "A minimart for requesting items",
 };
 
 export default function RootLayout({ children }) {

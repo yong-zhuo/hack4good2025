@@ -14,7 +14,7 @@ const SignOutButton = () => {
   const [loading, setLoading] = useState(false)
 
   const handleForm = async () => {
-
+    setLoading(true)
     const { result, error } = await logOut();
 
     if (error) {
@@ -23,6 +23,7 @@ const SignOutButton = () => {
         title: "Unable to sign out!",
         description: "Something went wrong, please try again!"
       })
+      setLoading(false)
       return
     }
 
@@ -33,7 +34,7 @@ const SignOutButton = () => {
   }
 
   return (
-    <div><Button variant="outline" className="text-slate-500 font-bold shadow-lg hover:-translate-y-1 transition bg-[#FBF5E5] hover:bg-[#FBF5E4]" onClick={handleForm} disabled={loading}>{loading ? <Loader2 className="animate-spin" /> : null} Sign Out</Button></div>
+    <div><Button  className="text-sec font-bold shadow-lg hover:-translate-y-1 transition bg-orange-400 hover:bg-orange-300" onClick={handleForm} disabled={loading}>{loading ? <Loader2 className="animate-spin" /> : null} Sign Out</Button></div>
   )
 }
 

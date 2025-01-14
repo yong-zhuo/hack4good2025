@@ -72,7 +72,7 @@ const SignInButton = () => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="text-slate-500 font-bold shadow-lg hover:-translate-y-1 transition bg-[#FBF5E5] hover:bg-[#FBF5E4]">Sign In</Button>
+        <Button className="text-sec font-bold shadow-lg hover:-translate-y-1 transition bg-orange-400 hover:bg-orange-300">Sign In</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
