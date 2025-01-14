@@ -7,7 +7,7 @@ import OrderCard from './OrderCard'
 
 const OrderCardList = async ({ orderList }) => {
     return (
-        <div className='w-fit mx-auto grid grid-cols-1 mt-10 mb-5 items-center justify-center '>
+        <div className='mx-auto grid grid-cols-1 mt-10 mb-5 items-center justify-center '>
             {orderList.map(order => (
                 <div key={order.id}>
                     <OrderCard
