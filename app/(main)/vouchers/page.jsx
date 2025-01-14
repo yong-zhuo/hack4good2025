@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { doc, getDoc, addDoc, collection } from "firebase/firestore";
 import { db } from "@/firebase/firebaseConfig";
 import { useAuthContext } from "@/context/AuthContext"; 
+import { Button } from "@/components/ui/button";
 
 const Vouchers = () => {
   const { user } = useAuthContext(); 
@@ -85,7 +86,7 @@ const Vouchers = () => {
   // for debugging
   if (error) {
     return (
-      <div className="p-8">
+      <div className="">
         <h1 className="text-6xl font-bold text-left mb-8 mt-4 text-pri">My Vouchers</h1>
         <div className="bg-white p-6 rounded shadow-md">
           <p className="text-lg mt-2 text-red-500">
@@ -97,7 +98,7 @@ const Vouchers = () => {
   }
 
   return (
-    <div className="p-8">
+    <div className="">
       <h1 className="text-6xl font-bold text-left mb-8 mt-4 text-pri">My Vouchers</h1>
       <div className="bg-white p-6 rounded shadow-md mb-8">
         <h2 className="text-xl font-semibold">Voucher Balance</h2>
@@ -115,12 +116,12 @@ const Vouchers = () => {
           value={justification}
           onChange={(e) => setJustification(e.target.value)}
         ></textarea>
-        <button
+        <Button
           onClick={handleRequestVoucher}
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-1/5"
+          className="bg-pri text-white rounded-lg hover:bg-slate-500"
         >
           Submit Request
-        </button>
+        </Button>
         </div>
         {requestStatus && (
           <p className="mt-4 text-sm text-gray-600">{requestStatus}</p>

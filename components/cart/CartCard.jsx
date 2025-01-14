@@ -25,22 +25,22 @@ const CartCard = ({ product, userId}) => {
 
   return (
     <div>
-      <div className="flex flex-col sm:flex-row items-center gap-3">
+      <div className="flex flex-col sm:flex-row items-center gap-6">
         <img
           src={product.image}
           alt={product.name}
-          width={140}
-          height={120}
+          width={90}
+          height={80}
           className="rounded-lg border border-pri "
         />
         <div className='flex flex-col sm:flex-row justify-center sm:justify-between items-center sm:w-full'>
           <div className='flex flex-col sm:text-start text-center'>
-            <Link href={"/product/" + product.id} className="font-bold text-3xl">
+            <Link href={"/product/" + product.id} className="font-bold text-3xl hover:underline">
               {product.name}
             </Link>
             <div className='text-gray-600'>{product.description}</div>
           </div>
-          <div className='flex flex-row gap-1'><p className='font-bold'>Price: </p> {product.price} points</div>
+          <div className='flex flex-row gap-1'><p className='font-bold'>Price: </p> {product.price} vouchers</div>
           <div className="my-1 flex items-center gap-2">
             <p className='font-bold'>Quantity:</p>
             <select
@@ -62,7 +62,7 @@ const CartCard = ({ product, userId}) => {
             <p className='font-bold'>Total:</p> 
             {isPending ?(
               <Loader2 className='text-gray-500 animate-spin' height={16}  />
-            ) : `${product.price * product.selectedQuantity} points`}
+            ) : `${product.price * product.selectedQuantity} vouchers`}
           </div>
           <RemoveItemButton userId={userId} productId={product.id}/>
         </div>

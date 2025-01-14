@@ -8,11 +8,11 @@ const ProductCard = ({ name, price, productid, image }) => {
             <a className="relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl" href={productUrl}>
                 <img className="object-cover w-full" src={image} alt={name} />
             </a>
-            <a className="mt-4 px-5 pb-5" href={productUrl}>
+            <a className="mt-4 px-5 pb-3" href={productUrl}>
                 <div className='flex flex-row justify-between items-center mb-2'>
                     <h5 className="text-xl tracking-tight text-slate-900">{name}</h5>
                     <p>
-                        <span className="text-3xl font-bold text-slate-900">${price}</span>
+                        <span className="text-2xl font-bold text-slate-900 flex flex-row items-center gap-1">{price} <span className='text-xs pt-2'>vouchers</span></span>
                     </p>
                 </div>
             </a>

@@ -51,11 +51,15 @@ async function addItemToOrder(product, userId) {
         const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
         const yyyy = today.getFullYear();
 
-        today = mm + '/' + dd + '/' + yyyy;
+        const hours = String(today.getHours()).padStart(2, '0');
+        const minutes = String(today.getMinutes()).padStart(2, '0');
+        const time = hours + ':' + minutes
+        today = mm + '/' + dd + '/' + yyyy + ' ' + time;
         const item = 
         {   name: product.name, 
             price: product.price, 
             image: product.image, 
+            productid: product.id,
             description: product.description,
             date: today,
             quantity: product.selectedQuantity,

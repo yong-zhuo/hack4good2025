@@ -1,6 +1,7 @@
 'use server'
 
 import CartCard from '@/components/cart/CartCard'
+import CartCardList from '@/components/cart/CartCardList'
 import CheckoutButton from '@/components/cart/CheckoutButton'
 import CheckUser from '@/components/cart/CheckUser'
 import { Card, CardFooter } from '@/components/ui/card'
@@ -42,22 +43,7 @@ const page = async ({ params }) => {
       {cartItems.length === 0 ? (
         <p>Your cart is empty.</p>
       ) : (
-        <Card className="w-full mx-auto container">
-          <ul className='m-5 px-5'>
-            <div className='h-[1px] bg-pri opacity-25 mb-4' />
-            {cartItems.map(item => (
-              <CartCard key={item.id} product={item} userId={slug} />
-            ))}
-          </ul>
-          <CardFooter className='flex flex-row justify-between items-center'>
-            <div>
-              <p className='font-bold translate-x-4 text-3xl text-orange-400'>Total Price: {totalPrice} points</p>
-            </div>
-            <div className='flex justify-end -translate-x-4'>
-              <CheckoutButton userId={slug} cartItems={cartItems} />
-            </div>
-          </CardFooter>
-        </Card>
+        <CartCardList cartItems={cartItems} userId={slug} totalPrice={totalPrice} />
       )}
     </div>
   )

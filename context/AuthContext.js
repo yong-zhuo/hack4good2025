@@ -28,7 +28,7 @@ export const AuthContextProvider = ({
             setLoading(false);
         });
         return () => unsubscribe();
-    }, [user]);
+    }, []);
 
     return (
         <AuthContext.Provider value={{ user, loading }}>
