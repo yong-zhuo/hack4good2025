@@ -103,13 +103,13 @@ const Vouchers = () => {
     <div className="">
       <h1 className="text-6xl font-bold text-left mb-8 mt-4 text-pri">My Vouchers</h1>
       <div className="bg-white p-6 rounded-lg shadow-md mb-8">
-        <h2 className="text-xl font-semibold">Voucher Balance</h2>
+        <h2 className="text-xl font-semibold text-pri">Voucher Balance</h2>
         <p className="text-lg mt-2">{balance} Vouchers</p>
       </div>
 
       {/* Request Voucher Section */}
       <div className="bg-white p-6 rounded-lg shadow-md">
-        <h2 className="text-xl font-semibold mb-4">Request Additional Vouchers</h2>
+        <h2 className="text-xl font-semibold mb-4 text-pri">Request Additional Vouchers</h2>
         <div className="flex flex-col justify-end items-end">
         <textarea
           className="w-full p-2 border rounded mb-4"

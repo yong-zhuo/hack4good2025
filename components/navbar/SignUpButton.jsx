@@ -22,7 +22,7 @@ const SignUpSchema = z.object({
     message: "Name is required"
   }),
   email: z.string().email({
-    message: "Invalid email"
+    message: "Invalid email format"
   }),
   password: z.string().min(6, {
     message: "Password must be at least 6 characters"
@@ -44,8 +44,9 @@ const SignUpButton = () => {
   })
 
   const { toast } = useToast()
-  const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
+  
 
   const router = useRouter();
 

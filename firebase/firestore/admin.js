@@ -1,5 +1,5 @@
 import { collection, deleteDoc, doc, getDocs, updateDoc } from "firebase/firestore";
-import { db } from "../firebaseConfig";
+import { auth, db } from "../firebaseConfig";
 
 export async function getOrders() {
   const orders = [];
@@ -31,4 +31,22 @@ export async function setNewProductQuantity(productId, newQuantity) {
 export async function deleteProduct(productId) {
   const productRef = doc(db, 'products', productId);
   await deleteDoc(productRef);
+}
+
+export async function deleteUserAccount(userId) {
+  try {
+    // Delete user document from Firestore
+    const userDocRef = doc(db, 'users', userId);
+    await deleteDoc(userDocRef);
+
+    // Delete user authentication record from Firebase Authentication
+    const user = await auth.getUser
+    await deleteUser(user);
+
+    console.log(`User ${userId} deleted successfully!`);
+    return { success: true };
+  } catch (error) {
+    console.error('Error deleting user:', error);
+    return { success: false, error };
+  }
 }

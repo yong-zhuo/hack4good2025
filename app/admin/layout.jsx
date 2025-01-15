@@ -3,7 +3,7 @@ import { HomeNavbar } from '@/components/homenavbar/HomeNavbar';
 
 import { useAuthContext } from '@/context/AuthContext';
 import React, { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import Logo from '@/components/navbar/Logo';
 import { db } from '@/firebase/firebaseConfig';
 import { ShoppingCart } from 'lucide-react';
@@ -14,25 +14,26 @@ import SignOutButton from '@/components/homenavbar/SignOutButton';
 
 const layout = ({ children }) => {
 
-  const { user } = useAuthContext();
+  const { user, loading } = useAuthContext();
   const router = useRouter();
-
+  const path = usePathname();
+  const containsAdminPath = path.includes('/admin');
   useEffect(() => {
     const checkAdminStatus = async () => {
       if (user) {
         const userDocRef = doc(db, 'users', user.uid);
         const userDoc = await getDoc(userDocRef);
-        if (userDoc.data().isAdmin) {
+        if ((userDoc.exists() || userDoc.data().isAdmin) && !containsAdminPath) {
           router.push('/admin/inventory');
-        } else {
-          router.push('/admin')
         }
-      } else {
-        router.push('/admin')
       }
+    };
+
+
+    if (!loading) {
+      checkAdminStatus();
     }
-    checkAdminStatus();
-  }, [user])
+  }, [user, loading, router]);
 
   return (
 
@@ -40,7 +41,7 @@ const layout = ({ children }) => {
       <div className="fixed inset-x-0 top-0 z-[15] h-[75px] bg-[#3E5879] py-2">
         <div className="mx-auto flex h-full items-center justify-between gap-2 px-8 sm:max-w-7xl md:max-w-full ">
           <div className='flex flex-row gap-1 items-center font-sans text-xl font-bold text-orange-500'><Link href="/admin" className='text-orange-400 flex items-center justify-center gap-1 font-sans font-extrabold text-xl'><ShoppingCart className='text-orange-400' />Minimart@MWH <span className='font-bold text-xl text-orange-500'>for admins</span></Link> </div>
-          
+
         </div>
       </div>
       <div className='h-full mx-auto container mt-20'>{children}</div>

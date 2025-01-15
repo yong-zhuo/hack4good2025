@@ -13,10 +13,12 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useToast } from '@/hooks/use-toast'
 import { CircleAlert, Loader2 } from 'lucide-react'
 import { useAuthContext } from '@/context/AuthContext'
+import { doc, getDoc, setDoc } from 'firebase/firestore'
+import { db } from '@/firebase/firebaseConfig'
 
 const SignInSchema = z.object({
   email: z.string().email({
-    message: "Invalid email"
+    message: "Invalid email format"
   }),
   password: z.string().min(6, {
     message: "Password must be at least 6 characters"
@@ -63,6 +65,13 @@ const SignInButton = () => {
     }
 
     if (result.user) {
+      const userRef = doc(db, 'users', result.user.uid)
+      const userDoc = await getDoc(userRef)
+      await setDoc(userRef, {
+        ...userDoc.data(),
+        lastLogin: new Date().toLocaleString()
+      }, { merge: true })
+      localStorage.setItem('userId', result.user.uid)
       setLoading(false)
       return router.push("/home")
     }

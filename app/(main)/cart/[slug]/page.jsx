@@ -41,7 +41,7 @@ const page = async ({ params }) => {
 
       <div className='text-6xl font-bold text-left mb-8 mt-4 text-pri'>Your Cart</div>
       {cartItems.length === 0 ? (
-        <p>Your cart is empty.</p>
+        <Card><span className='m-5 '>Your cart is empty.</span></Card>
       ) : (
         <CartCardList cartItems={cartItems} userId={slug} totalPrice={totalPrice} />
       )}

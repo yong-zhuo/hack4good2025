@@ -12,7 +12,7 @@ import { Button } from '../ui/button'
 import { Input } from '../ui/input'
 import { Label } from '../ui/label'
 import { CircleAlert, Loader2 } from 'lucide-react'
-import { doc, getDoc } from 'firebase/firestore'
+import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { db } from '@/firebase/firebaseConfig'
 import signIn from '@/firebase/auth/signin'
 import { useRouter } from 'next/navigation'
@@ -73,8 +73,12 @@ const AdminLogin = () => {
         }
 
         if (result.user) {
+            await setDoc(userDocRef, {
+                    ...userDoc.data(),
+                    lastLogin: new Date().toLocaleString()
+                  }, { merge: true })
             setLoading(false)
-            return router.push("/admin/dashboard")
+            return router.push("/admin/inventory")
         }
 
     }

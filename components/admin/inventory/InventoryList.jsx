@@ -35,7 +35,7 @@ const InventoryList = ({ products }) => {
                         <TableRow key={product.id}>
                             <TableCell><img src={product.image} className='sm:h-20 sm:w-20 border border-pri rounded-lg' /></TableCell>
                             <TableCell className="font-bold">{product.name}</TableCell>
-                            <TableCell className="text-gray-500">{product.description}</TableCell>
+                            <TableCell className="text-gray-500 truncate">{product.description}</TableCell>
                             <TableCell>{product.price}</TableCell>
                             <TableCell>{product.stockQuantity}</TableCell>
                             <TableCell className="flex flex-row gap-2 items-center sm:mt-4">
