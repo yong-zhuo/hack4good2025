@@ -12,6 +12,7 @@ const AdminNavBar = () => {
                     <Link href="/admin/inventory" className='text-sec hover:underline'>Inventory</Link>
                     <Link href="/admin/requests" className='text-sec hover:underline'>Requests</Link>
                     <Link href="/admin/users" className='text-sec hover:underline'>Users</Link>
+                    <Link href="/admin/vouchers" className='text-sec hover:underline'>Vouchers</Link>
                     <SignOutButton />
                 </div>
             </div>
