@@ -5,6 +5,7 @@ import SignInButton from './SignInButton'
 import SignUpButton from './SignUpButton'
 import AdminButton from './AdminButton'
 import Logo from './Logo'
+import ForgetPassword from './ForgetPassword'
 
 export const Navbar = async () => {
   return (
@@ -13,6 +14,7 @@ export const Navbar = async () => {
         <Logo />
         <div>
           <AdminButton />
+          <ForgetPassword />
           <SignUpButton />
           <SignInButton />
         </div>

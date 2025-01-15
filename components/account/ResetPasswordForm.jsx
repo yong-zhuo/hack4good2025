@@ -1,18 +1,17 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import { Input } from '../ui/input'
-import { Label } from '../ui/label'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { Button } from '../ui/button'
-import { CircleAlert, Loader2 } from 'lucide-react'
+import { CircleAlert, Loader2, Mail } from 'lucide-react'
 import { useAuthContext } from '@/context/AuthContext'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card'
 import { toast, useToast } from '@/hooks/use-toast'
 import { useRouter } from 'next/navigation'
-import { updatePassword } from 'firebase/auth'
+import { sendPasswordResetEmail, updatePassword } from 'firebase/auth'
+import { auth } from '@/firebase/firebaseConfig'
 
 const ResetSchema = z.object({
     password: z.string().min(6, {
@@ -42,18 +41,18 @@ const ResetPasswordForm = ({ user }) => {
     const handleReset = async (data) => {
         try {
             setButtonLoading(true);
-            await updatePassword(user, data.password);
+            await sendPasswordResetEmail(auth, user.email)
             toast({
                 variant: "success",
-                title: "Password updated",
-                description: "Your password has been updated successfully"
+                title: "Email sent",
+                description: "An email containing a password reset link has been sent to your email."
             })
             setButtonLoading(false);
             router.refresh();
         } catch (e) {
             toast({
-                variant: "Error",
-                title: "Error updating password",
+                variant: "destructive",
+                title: "Error sending email",
                 description: e.message
             })
             setButtonLoading(false);
@@ -65,25 +64,12 @@ const ResetPasswordForm = ({ user }) => {
             <Card className='mt-8 w-[60vh]'>
                 <CardHeader>
                     <CardTitle className="text-pri font-semibold">Reset Password</CardTitle>
-                    <CardDescription className="text-slate-500">Reset your password here.</CardDescription>
+                    <CardDescription className="text-slate-500">Send an email to reset your password.</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <form onSubmit={handleSubmit(handleReset)} className='flex flex-col justify-end items-end'>
-                        <div className="flex items-center justify-between w-full"><Label >New Password</Label>{errors.password && <span className="text-red-500 text-xs flex items-center justify-center"><CircleAlert height={12} />{errors.password.message}</span>}</div>
-                        <Input className="border-pri mt-1" id="password"
-                            {...register("password")}
-                            type="password"
-                            onChange={(e) => {
-                                setButtonDisabled(false);
-                            }} />
-                        <div className='mt-4 flex items-center justify-between w-full' 
-                            ><Label>Confirm Password</Label>{errors.confirmPassword && <span className="text-red-500 text-xs flex items-center justify-center"><CircleAlert height={12} />{errors.confirmPassword.message}</span>}</div>
-                        <Input className="border-pri mt-1" id="confirmPassword" type="password" {...register("confirmPassword")} onChange={(e) => {
-                            setButtonDisabled(false);
-                            
-                        }} />
-                        <Button type="submit" disabled={buttonLoading || buttonDisabled} className="bg-pri hover:bg-slate-500 shadow-md mt-4">{buttonLoading ? <Loader2 className="animate-spin" /> : null} Update</Button>
-                    </form>
+                    <div className='flex flex-col justify-center items-center border-t-2 border-pri'>
+                        <Button  onClick={handleReset} disabled={buttonLoading} className="bg-pri hover:bg-slate-500 shadow-md mt-4">{buttonLoading ? <Loader2 className="animate-spin" /> : null} Send Email </Button>
+                   </div>
                 </CardContent>
             </Card>
         </div>

@@ -49,7 +49,7 @@ const AdminButton = ({ user }) => {
 
   return (
     <>
-      {!user.isAdmin ? <div className='flex flex-row items-center justify-between gap-2'>Make {user.name} an admin <Button onClick={handleClick} className="bg-green-400 hover:bg-green-300 text-sec rounded-lg w-fit h-3/4">{loading ? <Loader /> : 'Make Admin'}</Button></div> : <div className='flex flex-row items-center justify-between gap-2'>Revoke {user.name} admin permissions <Button className="bg-red-400 text-sec rounded-lg w-fit h-3/4 hover:bg-red-500" onClick={handleClick}>{loading ? <Loader /> : 'Revoke Admin'}</Button></div>}
+      {!user.isAdmin ? <div className='flex flex-row items-center justify-between gap-2'>Make {user.name} an admin <Button onClick={handleClick} className="bg-green-400 hover:bg-green-300 text-sec rounded-lg w-fit h-3/4 shadow-md">{loading ? <Loader /> : 'Make Admin'}</Button></div> : <div className='flex flex-row items-center justify-between gap-2'>Revoke {user.name} admin permissions <Button className="bg-red-400 shadow-md text-sec rounded-lg w-fit h-3/4 hover:bg-red-500" onClick={handleClick}>{loading ? <Loader /> : 'Revoke Admin'}</Button></div>}
     </>
   )
 }
