@@ -41,6 +41,7 @@ const AddProductButton = () => {
     price: z.coerce.number().min(0, {
       message: "Price cannot be less than 0"
     }),
+    image: z.any()
   })
 
   const {
@@ -59,11 +60,9 @@ const AddProductButton = () => {
 
     try {
       setLoading(true)
-
       if (data.hasOwnProperty("image")) {
-        console.log(data.image)
         const imageUrl = await cloudinaryUpload(data.image, data, data.name)
-        set(data, { image: imageUrl })
+        data.image = imageUrl
       }
       await addDoc(collection(db, 'products'), data)
 
@@ -81,7 +80,7 @@ const AddProductButton = () => {
         title: "Error adding product",
         description: e.message
       })
-      setButtonLoading(false);
+      setLoading(false);
     }
   }
 
