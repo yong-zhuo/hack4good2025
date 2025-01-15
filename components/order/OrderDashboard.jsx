@@ -4,14 +4,14 @@ import { Tabs, TabsContent, TabsList } from '../ui/tabs'
 import { TabsTrigger } from '@radix-ui/react-tabs'
 import OrderCardList from './OrderCardList'
 import { db } from '@/firebase/firebaseConfig'
-import { collection, getDocs } from 'firebase/firestore'
+import { collection, getDocs, query, orderBy } from 'firebase/firestore'
 import { Card } from '../ui/card'
 
 const OrderDashboard = async ({ userid }) => {
 
     async function fetchOrders() {
         const ordersCollection = collection(db, 'orders')
-        const ordersSnapshot = await getDocs(ordersCollection)
+        const ordersSnapshot = await getDocs(query(ordersCollection, orderBy('date', 'desc')));
         const ordersList = ordersSnapshot.docs.map(doc => (
             {
                 id: doc.id,

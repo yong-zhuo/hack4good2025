@@ -3,12 +3,12 @@
 import React, { useEffect, useState } from "react";
 import { doc, getDoc, addDoc, collection } from "firebase/firestore";
 import { db } from "@/firebase/firebaseConfig";
-import { useAuthContext } from "@/context/AuthContext"; 
+import { useAuthContext } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 
 const Vouchers = () => {
-  const { user } = useAuthContext(); 
+  const { user } = useAuthContext();
   const [balance, setBalance] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -111,19 +111,19 @@ const Vouchers = () => {
       <div className="bg-white p-6 rounded-lg shadow-md">
         <h2 className="text-xl font-semibold mb-4 text-pri">Request Additional Vouchers</h2>
         <div className="flex flex-col justify-end items-end">
-        <textarea
-          className="w-full p-2 border rounded mb-4"
-          rows="4"
-          placeholder="Provide your justification for requesting additional vouchers..."
-          value={justification}
-          onChange={(e) => setJustification(e.target.value)}
-        ></textarea>
-        <Button
-          onClick={handleRequestVoucher}
-          className="bg-pri text-white rounded-lg hover:bg-slate-500 shadow-md"
-        >
-          Submit Request
-        </Button>
+          <textarea
+            className="w-full p-2 border rounded mb-4"
+            rows="4"
+            placeholder="Provide your justification for requesting additional vouchers..."
+            value={justification}
+            onChange={(e) => setJustification(e.target.value)}
+          ></textarea>
+          <Button
+            onClick={handleRequestVoucher}
+            className="bg-pri text-white rounded-lg hover:bg-slate-500 shadow-md"
+          >
+            Submit Request
+          </Button>
         </div>
         {requestStatus && (
           <p className="mt-4 text-sm text-gray-600">{requestStatus}</p>

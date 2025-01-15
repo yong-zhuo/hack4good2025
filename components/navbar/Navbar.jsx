@@ -3,6 +3,7 @@
 import React from 'react'
 import SignInButton from './SignInButton'
 import SignUpButton from './SignUpButton'
+import AdminButton from './AdminButton'
 import Logo from './Logo'
 
 export const Navbar = async () => {
@@ -11,6 +12,7 @@ export const Navbar = async () => {
       <div className="mx-auto flex h-full items-center justify-between gap-2 px-8 sm:max-w-7xl md:max-w-full ">
         <Logo />
         <div>
+          <AdminButton />
           <SignUpButton />
           <SignInButton />
         </div>
