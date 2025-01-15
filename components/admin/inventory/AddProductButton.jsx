@@ -13,6 +13,7 @@ import { addDoc, collection } from 'firebase/firestore'
 import cloudinaryUpload from '@/lib/cloudinaryUpload'
 import { db } from '@/firebase/firebaseConfig'
 import { useToast } from '@/hooks/use-toast'
+import { useRouter } from 'next/navigation'
 
 const AddProductButton = () => {
 
@@ -56,6 +57,8 @@ const AddProductButton = () => {
   const [open, setOpen] = useState(false);
   const { toast } = useToast()
 
+  const router = useRouter()
+
   const handleUpdate = async (data) => {
 
     try {
@@ -73,6 +76,7 @@ const AddProductButton = () => {
       })
       setLoading(false)
       setOpen(false)
+      router.refresh()
 
     } catch (e) {
       toast({
