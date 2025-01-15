@@ -84,7 +84,8 @@ const SignUpButton = () => {
         name: name,
         email: data.email,
         balance: 0,
-        isAdmin: false
+        isAdmin: false,
+        isSuspended: false
       })
       setLoading(false)
       return router.push("/home")
