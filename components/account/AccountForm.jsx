@@ -61,12 +61,12 @@ const AccountForm = () => {
                 </Card>
             </Skeleton>
             <Skeleton className="w-fit h-fit mt-8" >
-                <Card className="w-[60vh]  h-[32vh]">
+                <Card className="w-[60vh]  h-[20vh]">
                     <CardHeader>
                         <CardTitle className="text-pri font-semibold">Reset Password</CardTitle>
                         <CardDescription className="text-slate-500">Reset your password here.</CardDescription>
                     </CardHeader>
-                    <CardContent className="flex justify-center items-center mt-8">
+                    <CardContent className="flex justify-center items-center mt-5">
                         <Loader2 className='text-pri animate-spin h-12 w-12' />
                     </CardContent>
                 </Card>

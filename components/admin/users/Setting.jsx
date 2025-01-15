@@ -9,6 +9,7 @@ import { DialogTitle } from '@radix-ui/react-dialog'
 import { Settings } from 'lucide-react'
 import React from 'react'
 import AdminButton from './AdminButton'
+import SuspendButton from './SuspendButton'
 
 const Setting = ({ otherUser }) => {
 
@@ -46,11 +47,7 @@ const Setting = ({ otherUser }) => {
             <Label className="font-bold border-b border-gray-500">
               Suspend User
             </Label>
-          </div>
-          <div className='w-full flex flex-col '>
-            <Label className="font-bold border-b border-gray-500">
-              Reset Password
-            </Label>
+            <SuspendButton user={otherUser}/>
           </div>
         </DialogContent>
       </Dialog>
