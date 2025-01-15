@@ -15,6 +15,7 @@ import { CircleAlert, Loader2 } from 'lucide-react'
 import { useAuthContext } from '@/context/AuthContext'
 import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { db } from '@/firebase/firebaseConfig'
+import logOut from '@/firebase/auth/signout'
 
 const SignInSchema = z.object({
   email: z.string().email({
@@ -67,6 +68,22 @@ const SignInButton = () => {
     if (result.user) {
       const userRef = doc(db, 'users', result.user.uid)
       const userDoc = await getDoc(userRef)
+
+      if (userDoc.data().isSuspended) {
+        setLoading(false)
+        setOpen(false)
+
+        await logOut()
+
+        toast({
+          variant: "destructive",
+          title: "Account Suspended",
+          description: "Your account has been suspended. Please contact support for more information"
+        })
+        return
+      }
+
+
       await setDoc(userRef, {
         ...userDoc.data(),
         lastLogin: new Date().toLocaleString()
