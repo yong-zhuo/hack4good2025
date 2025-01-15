@@ -5,6 +5,7 @@ import { doc, getDoc, addDoc, collection } from "firebase/firestore";
 import { db } from "@/firebase/firebaseConfig";
 import { useAuthContext } from "@/context/AuthContext"; 
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 
 const Vouchers = () => {
   const { user } = useAuthContext(); 
@@ -13,6 +14,7 @@ const Vouchers = () => {
   const [error, setError] = useState(null);
   const [justification, setJustification] = useState(""); // For the textbox
   const [requestStatus, setRequestStatus] = useState(null); // To show success/error messages
+  const { toast } = useToast();
 
   useEffect(() => {
     const fetchVoucherBalance = async () => {
@@ -100,13 +102,13 @@ const Vouchers = () => {
   return (
     <div className="">
       <h1 className="text-6xl font-bold text-left mb-8 mt-4 text-pri">My Vouchers</h1>
-      <div className="bg-white p-6 rounded shadow-md mb-8">
+      <div className="bg-white p-6 rounded-lg shadow-md mb-8">
         <h2 className="text-xl font-semibold">Voucher Balance</h2>
         <p className="text-lg mt-2">{balance} Vouchers</p>
       </div>
 
       {/* Request Voucher Section */}
-      <div className="bg-white p-6 rounded shadow-md">
+      <div className="bg-white p-6 rounded-lg shadow-md">
         <h2 className="text-xl font-semibold mb-4">Request Additional Vouchers</h2>
         <div className="flex flex-col justify-end items-end">
         <textarea
@@ -118,7 +120,7 @@ const Vouchers = () => {
         ></textarea>
         <Button
           onClick={handleRequestVoucher}
-          className="bg-pri text-white rounded-lg hover:bg-slate-500"
+          className="bg-pri text-white rounded-lg hover:bg-slate-500 shadow-md"
         >
           Submit Request
         </Button>

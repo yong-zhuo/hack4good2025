@@ -25,7 +25,7 @@ const CartCard = ({ product, userId}) => {
 
   return (
     <div>
-      <div className="flex flex-col sm:flex-row items-center gap-6">
+      <div className="flex flex-col md:flex-row items-center gap-6">
         <img
           src={product.image}
           alt={product.name}
