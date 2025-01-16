@@ -6,7 +6,7 @@ import {
   updateVoucherRequest,
   updateUserVoucherBalance,
 } from "@/firebase/firestore/fetchVoucherRequests";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, collection, getDocs, updateDoc, addDoc } from "firebase/firestore";
 import { db } from "@/firebase/firebaseConfig";
 import { Loader2 } from "lucide-react";
 
@@ -20,28 +20,45 @@ const AdminVoucherRequests = () => {
   const [approvedRequests, setApprovedRequests] = useState([]);
   const [rejectedRequests, setRejectedRequests] = useState([]);
 
+  // States for Reward Vouchers Feature
+  const [users, setUsers] = useState([]);
+  const [selectedUserId, setSelectedUserId] = useState("");
+  const [rewardAmount, setRewardAmount] = useState(0);
+  const [rewardJustification, setRewardJustification] = useState("");
+
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // Fetch voucher requests
         const data = await fetchVoucherRequests();
         setRequests(data);
-
+    
         // Segregate requests into pending, approved, and rejected
         const pending = data.filter((req) => req.status === "pending");
         const approved = data.filter((req) => req.status === "approved");
         const rejected = data.filter((req) => req.status === "rejected");
-
+    
         setPendingRequests(pending);
         setApprovedRequests(approved);
         setRejectedRequests(rejected);
+    
+        // Fetch users for the dropdown
+        const usersRef = collection(db, "users");
+        const usersSnapshot = await getDocs(usersRef);
+        const usersList = usersSnapshot.docs.map((doc) => ({
+          userId: doc.id,
+          ...doc.data(),
+        }));
+        console.log("Fetched Users:", usersList); // Debugging
+        setUsers(usersList);
       } catch (err) {
-        console.error("Error fetching voucher requests:", err);
+        console.error("Error fetching data:", err);
         setError(err.message);
       } finally {
         setLoading(false);
       }
     };
-
+    
     fetchData();
   }, []);
 
@@ -121,6 +138,55 @@ const AdminVoucherRequests = () => {
     }
   };
 
+  const handleRewardVouchers = async () => {
+    try {
+      if (!selectedUserId || rewardAmount <= 0 || !rewardJustification.trim()) {
+        alert("Please fill in all fields with valid values.");
+        return;
+      }
+  
+      // Fetch the user's current balance
+      const userRef = doc(db, "users", selectedUserId);
+      const userDoc = await getDoc(userRef);
+      const currentBalance = userDoc.exists() ? userDoc.data().balance || 0 : 0;
+  
+      // Update the user's balance
+      const newBalance = currentBalance + rewardAmount;
+      await updateDoc(userRef, { balance: newBalance });
+  
+      // Log the reward in the `voucher_requests` collection
+      const requestRef = collection(db, "voucher_requests");
+      await addDoc(requestRef, {
+        userId: selectedUserId,
+        justification: rewardJustification,
+        vouchersAwarded: rewardAmount,
+        status: "approved", // Automatically approved as it's a reward
+        timestamp: new Date(),
+      });
+  
+      alert(`Successfully rewarded ${rewardAmount} vouchers to User ID: ${selectedUserId}`);
+      setRewardAmount(0); // Reset form fields
+      setRewardJustification("");
+      setSelectedUserId("");
+  
+      // Refresh requests state to include the new reward
+      const data = await fetchVoucherRequests();
+      setRequests(data);
+  
+      // Update segregated lists
+      const pending = data.filter((req) => req.status === "pending");
+      const approved = data.filter((req) => req.status === "approved");
+      const rejected = data.filter((req) => req.status === "rejected");
+  
+      setPendingRequests(pending);
+      setApprovedRequests(approved);
+      setRejectedRequests(rejected);
+    } catch (err) {
+      console.error("Error rewarding vouchers:", err);
+      alert("Failed to reward vouchers. Please try again.");
+    }
+  };
+
   if (loading) return <p className="flex flex-row justify-center items-center"><Loader2 className="text-pri h-2 w-12"/></p>;
   if (error) return <p>Error: {error}</p>;
 
@@ -129,6 +195,50 @@ const AdminVoucherRequests = () => {
       <h1 className="text-3xl font-bold text-left mb-8 mt-4 text-pri">
         Voucher Requests
       </h1>
+
+      {/* Reward Vouchers Section */}
+      <section className="bg-white p-6 rounded shadow-md mb-8">
+        <h2 className="text-xl font-semibold mb-4">Reward Vouchers to a User</h2>
+        <div className="flex flex-col gap-4">
+          <select
+            value={selectedUserId}
+            onChange={(e) => setSelectedUserId(e.target.value)}
+            className="border p-2 rounded"
+          >
+            <option value="">Select a User</option>
+            {users.map((user) => (
+              <option key={user.userId} value={user.userId}>
+                {user.name} ({user.userId})
+              </option>
+            ))}
+          </select>
+
+          <input
+            type="number"
+            value={rewardAmount}
+            onChange={(e) => setRewardAmount(Number(e.target.value))}
+            placeholder="Voucher Amount"
+            className="border p-2 rounded"
+          />
+
+          <textarea
+            value={rewardJustification}
+            onChange={(e) => setRewardJustification(e.target.value)}
+            placeholder="Justification"
+            className="border p-2 rounded"
+            rows="4"
+          ></textarea>
+
+          <div className="flex justify-end">
+            <button
+              onClick={handleRewardVouchers}
+              className="shadow-md bg-green-400 text-white px-4 py-2 rounded hover:bg-green-600 w-64"
+            >
+              Reward Vouchers
+            </button>
+          </div>
+        </div>
+      </section>
 
       {/* Pending Requests */}
       <section className="mb-8">
