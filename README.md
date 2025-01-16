@@ -1,36 +1,104 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# **Minimart@MWH**
 
-## Getting Started
+Minimart@MWH is a digital platform designed to empower residents of the Muhammadiyah Welfare Home (MWH) through a token economy system. It enables residents to manage vouchers, request items, and learn essential life skills, while administrators efficiently manage stock, approve orders, and distribute vouchers.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## **Table of Contents**
+1. [Inspiration](#inspiration)
+2. [Features](#features)
+3. [Tech Stack](#tech-stack)
+4. [Setup and Installation](#setup-and-installation)
+5. [Challenges Faced](#challenges-faced)
+6. [Accomplishments](#accomplishments)
+7. [What's Next](#whats-next)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## **Inspiration**
+The idea for Minimart@MWH came from a problem statement by MWH that challenged us to create a digital minimart powered by a token economy. We found this idea both novel and meaningful, as it could teach residents valuable skills like financial management, foster positive behavior, and improve discipline, all while motivating them to learn and grow.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## **Features**
+### **For Residents**
+- Request items using vouchers.
+- Request vouchers with justifications for completed tasks.
+- View voucher balance and order history.
 
-To learn more about Next.js, take a look at the following resources:
+### **For Administrators**
+- Distribute vouchers to residents with justifications.
+- Manage item stock and set voucher prices.
+- Approve or reject voucher requests from residents.
+- Track order and voucher activity for all residents.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## **Tech Stack**
+- **Frontend**: React, Next.js
+- **Backend**: Firebase (Authentication, Firestore Database)
+- **Styling**: Tailwind CSS
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## **Setup and Installation**
+Follow these steps to set up the project locally:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-repo/minimart-mwh.git
+   cd minimart-mwh
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Set up Firebase:
+   - Create a Firebase project at [Firebase Console](https://console.firebase.google.com/).
+   - Enable Firestore and Authentication.
+   - Add your Firebase configuration to `firebaseConfig.js`.
+
+4. Run the development server:
+   ```bash
+   npm run dev
+   ```
+
+5.	Open the app in your browser:
+   ```bash
+   http://localhost:3000
+   ```
+
+---
+
+## **Challenges Faced**
+- **Edge Cases**: Designing a seamless user experience required handling numerous edge cases for both residents and administrators.
+- **Learning Curve**: Adapting to new technologies like Firebase, Next.js, and Tailwind CSS posed initial challenges.
+- **Time Constraints**: Developing a fully functional prototype within 4 days while managing schoolwork was demanding.
+
+---
+
+## **Accomplishments**
+- Delivered a polished and functional prototype within 4 days.
+- Integrated robust features for both residents and administrators.
+- Learned and utilized new technologies, enhancing our web development skills.
+
+---
+
+## **What's Next**
+- **Automation**: Integrate LMS platforms or behavior trackers for automated voucher distribution.
+- **POS Integration**: Automate stock updates through point-of-sale systems.
+- **Accessibility Improvements**: Enhance the user interface for better accessibility and usability.
+
+---
+
+## **Contributors**
+- **Yap Yong Zhuo**
+- **Ho Wei Nian**
+- **Sivakumar Karthikraj**
+
+---
+
+## **License**
+This project is licensed under the [MIT License](LICENSE).
