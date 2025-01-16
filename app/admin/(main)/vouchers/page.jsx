@@ -1,24 +1,38 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "@/firebase/firebaseConfig"; // Ensure your Firebase config is correctly imported
 import {
   fetchVoucherRequests,
   updateVoucherRequest,
   updateUserVoucherBalance,
 } from "@/firebase/firestore/fetchVoucherRequests";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "@/firebase/firebaseConfig";
 
 const AdminVoucherRequests = () => {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // State for segregated lists
+  const [pendingRequests, setPendingRequests] = useState([]);
+  const [approvedRequests, setApprovedRequests] = useState([]);
+  const [rejectedRequests, setRejectedRequests] = useState([]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await fetchVoucherRequests();
         setRequests(data);
+
+        // Segregate requests into pending, approved, and rejected
+        const pending = data.filter((req) => req.status === "pending");
+        const approved = data.filter((req) => req.status === "approved");
+        const rejected = data.filter((req) => req.status === "rejected");
+
+        setPendingRequests(pending);
+        setApprovedRequests(approved);
+        setRejectedRequests(rejected);
       } catch (err) {
         console.error("Error fetching voucher requests:", err);
         setError(err.message);
@@ -32,37 +46,24 @@ const AdminVoucherRequests = () => {
 
   const handleApprove = async (requestId, userId, voucherAmount) => {
     try {
-      // Ensure voucherAmount is a valid number
       if (!voucherAmount || isNaN(voucherAmount) || voucherAmount <= 0) {
         alert("Please enter a valid voucher amount greater than 0.");
         return;
       }
-  
-      // Find the request to get the user's current balance
-      const request = requests.find((req) => req.id === requestId);
-      if (!request) {
-        alert("Request not found!");
-        return;
-      }
-  
-      // Fetch the user's current balance from Firestore (optional for safety)
+
       const userRef = doc(db, "users", userId);
       const userDoc = await getDoc(userRef);
       const currentBalance = userDoc.exists() ? userDoc.data().balance || 0 : 0;
-  
-      // Calculate the new balance
+
       const newBalance = currentBalance + voucherAmount;
-  
-      // Update the voucher request to 'approved'
+
       await updateVoucherRequest(requestId, {
         status: "approved",
         vouchersAwarded: voucherAmount,
       });
-  
-      // Update the user's balance in Firestore
+
       await updateUserVoucherBalance(userId, newBalance);
-  
-      // Refresh the requests list
+
       setRequests((prev) =>
         prev.map((req) =>
           req.id === requestId
@@ -70,7 +71,16 @@ const AdminVoucherRequests = () => {
             : req
         )
       );
-  
+
+      // Update segregated lists
+      setPendingRequests((prev) =>
+        prev.filter((req) => req.id !== requestId)
+      );
+      setApprovedRequests((prev) => [
+        ...prev,
+        { id: requestId, status: "approved", vouchersAwarded: voucherAmount },
+      ]);
+
       alert(`Voucher request approved! User's new balance: ${newBalance}`);
     } catch (err) {
       console.error("Error approving voucher request:", err);
@@ -79,13 +89,16 @@ const AdminVoucherRequests = () => {
 
   const handleReject = async (requestId, rejectionReason) => {
     try {
-      // Update the voucher request to 'rejected'
+      if (!rejectionReason || rejectionReason.trim() === "") {
+        alert("Please provide a justification for rejection.");
+        return;
+      }
+
       await updateVoucherRequest(requestId, {
         status: "rejected",
         rejectionReason,
       });
 
-      // Refresh the requests list
       setRequests((prev) =>
         prev.map((req) =>
           req.id === requestId
@@ -93,6 +106,15 @@ const AdminVoucherRequests = () => {
             : req
         )
       );
+
+      // Update segregated lists
+      setPendingRequests((prev) =>
+        prev.filter((req) => req.id !== requestId)
+      );
+      setRejectedRequests((prev) => [
+        ...prev,
+        { id: requestId, status: "rejected", rejectionReason },
+      ]);
     } catch (err) {
       console.error("Error rejecting voucher request:", err);
     }
@@ -103,32 +125,33 @@ const AdminVoucherRequests = () => {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-left mb-8 mt-4 text-pri">Voucher Requests</h1>
-      {requests.map((request) => (
-        <div
-          key={request.id}
-          className="border p-4 rounded mb-4 shadow-md bg-white"
-        >
-          <p>
-            <strong>Name:</strong> {request.userName}
-          </p>
-          <p>
-            <strong>Justification:</strong> {request.justification}
-          </p>
-          <p>
-            <strong>Status:</strong> {request.status}
-          </p>
-          {request.status === "pending" && (
+      <h1 className="text-3xl font-bold text-left mb-8 mt-4 text-pri">
+        Voucher Requests
+      </h1>
+
+      {/* Pending Requests */}
+      <section className="mb-8">
+        <h2 className="text-2xl font-semibold mb-4">Pending Requests</h2>
+        {pendingRequests.map((request) => (
+          <div
+            key={request.id}
+            className="border p-4 rounded mb-4 shadow-md bg-white"
+          >
+            <p>
+              <strong>Name:</strong> {request.userName}
+            </p>
+            <p>
+              <strong>Justification:</strong> {request.justification}
+            </p>
             <div className="mt-4">
-              {/* Approve Button */}
               <input
                 type="number"
                 placeholder="Voucher Amount"
                 className="border p-2 rounded mr-2"
                 id={`approve-${request.id}`}
                 onInput={(e) => {
-                    e.target.value = e.target.value < 0 ? 0 : e.target.value; // Prevent negative input
-                  }}
+                  e.target.value = e.target.value < 0 ? 0 : e.target.value;
+                }}
               />
               <button
                 onClick={() =>
@@ -144,8 +167,6 @@ const AdminVoucherRequests = () => {
               >
                 Approve
               </button>
-
-              {/* Reject Button */}
               <input
                 type="text"
                 placeholder="Rejection Reason"
@@ -164,9 +185,51 @@ const AdminVoucherRequests = () => {
                 Reject
               </button>
             </div>
-          )}
-        </div>
-      ))}
+          </div>
+        ))}
+      </section>
+
+      {/* Approved Requests */}
+      <section className="mb-8">
+        <h2 className="text-2xl font-semibold mb-4">Approved Requests</h2>
+        {approvedRequests.map((request) => (
+          <div
+            key={request.id}
+            className="border p-4 rounded mb-4 shadow-md bg-white"
+          >
+            <p>
+              <strong>Name:</strong> {request.userName}
+            </p>
+            <p>
+              <strong>Justification:</strong> {request.justification}
+            </p>
+            <p>
+              <strong>Vouchers Awarded:</strong> {request.vouchersAwarded}
+            </p>
+          </div>
+        ))}
+      </section>
+
+      {/* Rejected Requests */}
+      <section className="mb-8">
+        <h2 className="text-2xl font-semibold mb-4">Rejected Requests</h2>
+        {rejectedRequests.map((request) => (
+          <div
+            key={request.id}
+            className="border p-4 rounded mb-4 shadow-md bg-white"
+          >
+            <p>
+              <strong>Name:</strong> {request.userName}
+            </p>
+            <p>
+              <strong>Justification:</strong> {request.justification}
+            </p>
+            <p>
+              <strong>Rejection Reason:</strong> {request.rejectionReason}
+            </p>
+          </div>
+        ))}
+      </section>
     </div>
   );
 };
