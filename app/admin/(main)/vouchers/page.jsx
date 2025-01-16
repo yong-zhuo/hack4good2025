@@ -8,6 +8,7 @@ import {
 } from "@/firebase/firestore/fetchVoucherRequests";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/firebase/firebaseConfig";
+import { Loader2 } from "lucide-react";
 
 const AdminVoucherRequests = () => {
   const [requests, setRequests] = useState([]);
@@ -120,7 +121,7 @@ const AdminVoucherRequests = () => {
     }
   };
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p className="flex flex-row justify-center items-center"><Loader2 className="text-pri h-2 w-12"/></p>;
   if (error) return <p>Error: {error}</p>;
 
   return (
@@ -143,47 +144,51 @@ const AdminVoucherRequests = () => {
             <p>
               <strong>Justification:</strong> {request.justification}
             </p>
-            <div className="mt-4">
-              <input
-                type="number"
-                placeholder="Voucher Amount"
-                className="border p-2 rounded mr-2"
-                id={`approve-${request.id}`}
-                onInput={(e) => {
-                  e.target.value = e.target.value < 0 ? 0 : e.target.value;
-                }}
-              />
-              <button
-                onClick={() =>
-                  handleApprove(
-                    request.id,
-                    request.userId,
-                    Number(
-                      document.getElementById(`approve-${request.id}`).value
+            <div className="mt-4 flex flex-row justify-between items-center">
+              <div>
+                <input
+                  type="number"
+                  placeholder="Voucher Amount"
+                  className="border p-2 rounded mr-2"
+                  id={`approve-${request.id}`}
+                  onInput={(e) => {
+                    e.target.value = e.target.value < 0 ? 0 : e.target.value;
+                  }}
+                />
+                <button
+                  onClick={() =>
+                    handleApprove(
+                      request.id,
+                      request.userId,
+                      Number(
+                        document.getElementById(`approve-${request.id}`).value
+                      )
                     )
-                  )
-                }
-                className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-              >
-                Approve
-              </button>
-              <input
-                type="text"
-                placeholder="Rejection Reason"
-                className="border p-2 rounded mr-2 mt-2"
-                id={`reject-${request.id}`}
-              />
-              <button
-                onClick={() =>
-                  handleReject(
-                    request.id,
-                    document.getElementById(`reject-${request.id}`).value
-                  )
-                }
-                className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-              >
-                Reject
-              </button>
+                  }
+                  className="shadow-md bg-green-400 text-white px-4 py-2 rounded hover:bg-green-600"
+                >
+                  Approve
+                </button>
+              </div>
+              <div>
+                <input
+                  type="text"
+                  placeholder="Rejection Reason"
+                  className="border p-2 rounded mr-2 mt-2"
+                  id={`reject-${request.id}`}
+                />
+                <button
+                  onClick={() =>
+                    handleReject(
+                      request.id,
+                      document.getElementById(`reject-${request.id}`).value
+                    )
+                  }
+                  className="shadow-md bg-red-400 text-white px-4 py-2 rounded hover:bg-red-600"
+                >
+                  Reject
+                </button>
+              </div>
             </div>
           </div>
         ))}

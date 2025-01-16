@@ -87,8 +87,8 @@ const RequestList = ({ products }) => {
                             <TableCell>{product.price}</TableCell>
                             <TableCell>{product.quantity}</TableCell>
                             <TableCell className="flex flex-row items-center gap-x-2">
-                                <Button variant="ghost" value={product.id} onClick={handleApprove} className="hover:text-white hover:bg-green-500 rounded-3xl flex items-center justify-center bg-green-500 max-w-20">Approve</Button>
-                                <Button variant="ghost" value={product.id} onClick={handleReject} className="hover:text-white hover:bg-red-500 rounded-3xl flex items-center justify-center bg-red-500 min-w-20">Reject</Button>
+                                <Button variant="ghost" value={product.id} onClick={handleApprove} className="hover:text-white shadow-md hover:bg-green-500 rounded-lg flex items-center justify-center bg-green-400 max-w-20 text-sec">Approve</Button>
+                                <Button variant="ghost" value={product.id} onClick={handleReject} className="hover:text-white shadow-md hover:bg-red-500 rounded-lg flex items-center justify-center bg-red-400 min-w-20  text-sec">Reject</Button>
                             </TableCell>
                         </TableRow>
                     ))}
