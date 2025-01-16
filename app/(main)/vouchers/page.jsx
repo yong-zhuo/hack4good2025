@@ -3,12 +3,12 @@
 import React, { useEffect, useState } from "react";
 import { doc, getDoc, addDoc, collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "@/firebase/firebaseConfig";
-import { useAuthContext } from "@/context/AuthContext"; 
+import { useAuthContext } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 
 const Vouchers = () => {
-  const { user } = useAuthContext(); 
+  const { user } = useAuthContext();
   const [balance, setBalance] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
