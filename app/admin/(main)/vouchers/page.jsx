@@ -229,12 +229,14 @@ const AdminVoucherRequests = () => {
             rows="4"
           ></textarea>
 
-          <button
-            onClick={handleRewardVouchers}
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-          >
-            Reward Vouchers
-          </button>
+          <div className="flex justify-end">
+            <button
+              onClick={handleRewardVouchers}
+              className="shadow-md bg-green-400 text-white px-4 py-2 rounded hover:bg-green-600 w-64"
+            >
+              Reward Vouchers
+            </button>
+          </div>
         </div>
       </section>
 
