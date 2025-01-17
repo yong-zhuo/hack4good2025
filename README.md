@@ -71,8 +71,8 @@ Follow these steps to set up the project locally:
    http://localhost:3000
    ```
 
-6.	Alternatively, access the deployed version on Vercel:
-(Link will be provided once deployment is complete.)
+6.	Alternatively, access the deployed version [here](https://minimartmwh.vercel.app/).
+
 
 ---
 
