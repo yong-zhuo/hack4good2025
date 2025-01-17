@@ -1,4 +1,4 @@
-import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, updateDoc } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, updateDoc, query } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 
 export async function getProductStockQuantity(productId) {
@@ -55,10 +55,16 @@ async function addItemToOrder(product, userId) {
         const minutes = String(today.getMinutes()).padStart(2, '0');
         const time = hours + ':' + minutes
         today = mm + '/' + dd + '/' + yyyy + ' ' + time;
-        const item = 
-        {   name: product.name, 
-            price: product.price, 
-            image: product.image, 
+
+        const userRef = await getDocs(query(collection(db, 'users')));
+        const userData = userRef.docs.find((doc) => doc.id === userId);
+        const userName = userData.data().name;
+        const item =
+        {
+            name: product.name,
+            userRef: userName,
+            price: product.price,
+            image: product.image,
             productid: product.id,
             description: product.description,
             date: today,
@@ -79,7 +85,7 @@ async function deleteCart(userId) {
     try {
         const cartCollectionRef = collection(db, 'users', userId, 'cart');
         const cartSnapshot = await getDocs(cartCollectionRef);
-    
+
         const deletePromises = cartSnapshot.docs.map((doc) => deleteDoc(doc.ref));
         await Promise.all(deletePromises);
         console.log('Cart deleted successfully!');
