@@ -23,13 +23,16 @@ The idea for Minimart@MWH came from a problem statement by MWH that challenged u
 
 ## **Features**
 ### **For Residents**
+- View products and their stock quantity.
 - Request items using vouchers.
+- Edit profile and reset password.
 - Request vouchers with justifications for completed tasks.
 - View voucher balance and order history.
 
 ### **For Administrators**
 - Distribute vouchers to residents with justifications.
 - Manage item stock and set voucher prices.
+- Manage user account permissions, such as suspending accounts.
 - Approve or reject voucher requests from residents.
 - Track order and voucher activity for all residents.
 
