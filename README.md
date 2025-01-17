@@ -1,9 +1,9 @@
-# **Minimart@MWH**
+ # **Minimart@MWH**
 
 Minimart@MWH is a digital platform designed to empower residents of the Muhammadiyah Welfare Home (MWH) through a token economy system. It enables residents to manage vouchers, request items, and learn essential life skills, while administrators efficiently manage stock, approve orders, and distribute vouchers.
 
+![Screenshot 2025-01-17 182028](https://github.com/user-attachments/assets/440386e4-3816-40b8-910b-a0437afd9939)
 ---
-
 ## **Table of Contents**
 1. [Inspiration](#inspiration)
 2. [Features](#features)
