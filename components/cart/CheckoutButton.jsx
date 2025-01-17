@@ -6,8 +6,10 @@ import { useToast } from '@/hooks/use-toast'
 import { useRouter } from 'next/navigation'
 import { Loader } from 'lucide-react'
 import { sendRequest } from '@/firebase/firestore/modifyProduct'
+import { doc, getDoc } from 'firebase/firestore'
+import { db } from '@/firebase/firebaseConfig'
 
-const CheckoutButton = ({ userId, cartItems }) => {
+const CheckoutButton = ({ userId, cartItems, totalPrice }) => {
 
     const { toast } = useToast()
     const router = useRouter()
@@ -16,11 +18,22 @@ const CheckoutButton = ({ userId, cartItems }) => {
     const handleCheckout = async () => {
         setLoading(true)
         try {
-            await sendRequest(userId, cartItems)
-            toast({
-                variant: "success",
-                title: 'Request sent successfully',
-            })
+            const userDoc = doc(db, 'users', userId)
+            const userDocRef = await getDoc(userDoc)
+
+            if (userDocRef.data().balance < totalPrice) {
+                toast({
+                    variant: "destructive",
+                    title: 'Insufficient vouchers',
+                    description: 'Please request for more vouchers to proceed',
+                })
+            } else {
+                await sendRequest(userId, cartItems)
+                toast({
+                    variant: "success",
+                    title: 'Request sent successfully',
+                })
+            }
             setLoading(false)
             router.refresh()
         } catch (error) {

@@ -45,7 +45,7 @@ const CartCardList = ({ cartItems, userId, totalPrice }) => {
                     <p className='font-bold translate-x-4 sm:text-3xl text-sm text-wrap'>Total Price: {totalPrice} vouchers</p>
                 </div>
                 <div className='flex justify-end -translate-x-4'>
-                    <CheckoutButton userId={userId} cartItems={cartItems} />
+                    <CheckoutButton userId={userId} cartItems={cartItems} totalPrice={totalPrice} />
                 </div>
             </CardFooter>
         </Card>
