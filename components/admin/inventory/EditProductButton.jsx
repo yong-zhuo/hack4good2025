@@ -88,7 +88,7 @@ const EditProductButton = ({ product }) => {
                                 {errors.stockQuantity && <span className="text-red-500 text-xs flex items-center justify-center"><CircleAlert height={12} />{errors.stockQuantity.message}</span>}
                             </div>
                             <Input
-                                id="price"
+                                id="Price"
                                 className="col-span-3 "
                                 {...register("price")}
                                 type="number"
