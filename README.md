@@ -9,9 +9,10 @@ Minimart@MWH is a digital platform designed to empower residents of the Muhammad
 2. [Features](#features)
 3. [Tech Stack](#tech-stack)
 4. [Setup and Installation](#setup-and-installation)
-5. [Challenges Faced](#challenges-faced)
-6. [Accomplishments](#accomplishments)
-7. [What's Next](#whats-next)
+5. [How to Access the Admin Account](#how-to-access-the-admin-account)
+6. [Challenges Faced](#challenges-faced)
+7. [Accomplishments](#accomplishments)
+8. [What's Next](#whats-next)
 
 ---
 
@@ -69,6 +70,21 @@ Follow these steps to set up the project locally:
    ```bash
    http://localhost:3000
    ```
+
+6.	Alternatively, access the deployed version on Vercel:
+(Link will be provided once deployment is complete.)
+
+---
+
+## **How to Access the Admin Account**
+To log in as an administrator, follow these steps:
+
+1. On the welcome page, click the **Admin** button.
+2. Use the following credentials to log in:
+   - **Email**: `123@email.com`
+   - **Password**: `123123`
+
+Due to time constraints and the complexity of implementing a secure admin account creation system, we opted to provide a single pre-configured admin account for now. This decision ensures that the admin account cannot be abused by residents, safeguarding the platform’s integrity while maintaining functionality. Future updates will focus on improving this feature.
 
 ---
 

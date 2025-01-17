@@ -215,10 +215,13 @@ const AdminVoucherRequests = () => {
 
           <input
             type="number"
-            value={rewardAmount}
-            onChange={(e) => setRewardAmount(Number(e.target.value))}
             placeholder="Voucher Amount"
-            className="border p-2 rounded"
+            className="border p-2 rounded mr-2"
+            value={rewardAmount === 0 ? "" : rewardAmount}
+            onChange={(e) => setRewardAmount(Number(e.target.value))}
+            onInput={(e) => {
+              e.target.value = e.target.value < 0 ? 0 : e.target.value;
+            }}
           />
 
           <textarea
