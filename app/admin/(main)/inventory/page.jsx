@@ -1,10 +1,12 @@
-'use server'
 
 import AddProductButton from '@/components/admin/inventory/AddProductButton'
 import InventoryList from '@/components/admin/inventory/InventoryList'
 import { db } from '@/firebase/firebaseConfig'
 import { collection, getDocs } from 'firebase/firestore'
 import React from 'react'
+
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
 
 const page = async () => {
 

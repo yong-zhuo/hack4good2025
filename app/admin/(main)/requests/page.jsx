@@ -3,6 +3,9 @@ import React from 'react'
 import { collection, getDocs } from 'firebase/firestore'
 import { db } from '@/firebase/firebaseConfig'
 
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
+
 const page = async () => {
 
     async function fetchProducts() {
