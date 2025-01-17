@@ -94,12 +94,12 @@ Due to time constraints and the complexity of implementing a secure admin accoun
 ## **Challenges Faced**
 - **Edge Cases**: Designing a seamless user experience required handling numerous edge cases for both residents and administrators.
 - **Learning Curve**: Adapting to new technologies like Firebase, Next.js, and Tailwind CSS posed initial challenges.
-- **Time Constraints**: Developing a fully functional prototype within 4 days while managing schoolwork was demanding.
+- **Time Constraints**: Developing a fully functional prototype within 6 days while managing schoolwork was demanding.
 
 ---
 
 ## **Accomplishments**
-- Delivered a polished and functional prototype within 4 days.
+- Delivered a polished and functional prototype within 6 days.
 - Integrated robust features for both residents and administrators.
 - Learned and utilized new technologies, enhancing our web development skills.
 
