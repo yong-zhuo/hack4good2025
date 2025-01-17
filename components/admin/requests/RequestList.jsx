@@ -58,7 +58,7 @@ const RequestList = ({ products }) => {
                             Product Name
                         </TableHead>
                         <TableHead className="font-bold">
-                            User Name
+                            Requester
                         </TableHead>
                         <TableHead className="font-bold">
                             User ID
@@ -81,7 +81,7 @@ const RequestList = ({ products }) => {
                     {products.map((product) => (
                         <TableRow key={product.id}>
                             <TableCell className="text-gray-500 truncate">{product.name}</TableCell>
-                            <TableCell>{product.name}</TableCell>
+                            <TableCell>{product.userRef}</TableCell>
                             <TableCell className="font-bold truncate">{product.userid}</TableCell>
                             <TableCell>{product.date}</TableCell>
                             <TableCell>{product.price}</TableCell>

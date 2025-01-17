@@ -18,6 +18,9 @@ const EditProductButton = ({ product }) => {
         stockQuantity: z.coerce.number().min(0, {
             message: "Quantity cannot be less than 0"
         }),
+        price: z.coerce.number().min(0, {
+            message: "Price cannot be less than 0"
+        })
     })
 
     const router = useRouter()
@@ -29,7 +32,8 @@ const EditProductButton = ({ product }) => {
     } = useForm({
         resolver: zodResolver(EditSchema),
         defaultValues: {
-            stockQuantity: product.stockQuantity
+            stockQuantity: product.stockQuantity,
+            price: product.price
         }
     })
 
@@ -41,7 +45,8 @@ const EditProductButton = ({ product }) => {
             setLoading(true);
             const productRef = doc(db, 'products', product.id);
             await setDoc(productRef, {
-                stockQuantity: data.stockQuantity
+                stockQuantity: data.stockQuantity,
+                price: data.price
             }, { merge: true });
             setLoading(false);
             setOpen(false);
@@ -75,7 +80,20 @@ const EditProductButton = ({ product }) => {
                                 type="number"
                             />
                         </div>
-
+                        <div className='flex flex-col items-start gap-y-2 mb-2'>
+                            <div className='flex items-center justify-between w-full'>
+                                <Label htmlFor="stockQuantity" className="text-right text-[#3E5879]">
+                                    price
+                                </Label>
+                                {errors.stockQuantity && <span className="text-red-500 text-xs flex items-center justify-center"><CircleAlert height={12} />{errors.stockQuantity.message}</span>}
+                            </div>
+                            <Input
+                                id="price"
+                                className="col-span-3 "
+                                {...register("price")}
+                                type="number"
+                            />
+                        </div>
                         <div className="flex justify-center mt-2">
                             <DialogFooter>
                                 <Button type="submit" disabled={loading} className="bg-[#3E5879]">{loading ? <Loader2 className="animate-spin" /> : null} Submit</Button>
