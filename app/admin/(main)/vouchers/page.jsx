@@ -9,6 +9,10 @@ import {
 import { doc, getDoc, collection, getDocs, updateDoc, addDoc } from "firebase/firestore";
 import { db } from "@/firebase/firebaseConfig";
 import { Loader2 } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
+
+export const dynamic = 'force-dynamic';
 
 const AdminVoucherRequests = () => {
   const [requests, setRequests] = useState([]);
@@ -20,11 +24,16 @@ const AdminVoucherRequests = () => {
   const [approvedRequests, setApprovedRequests] = useState([]);
   const [rejectedRequests, setRejectedRequests] = useState([]);
 
+
   // States for Reward Vouchers Feature
   const [users, setUsers] = useState([]);
   const [selectedUserId, setSelectedUserId] = useState("");
   const [rewardAmount, setRewardAmount] = useState(0);
   const [rewardJustification, setRewardJustification] = useState("");
+
+  const { toast } = useToast();
+  const router = useRouter();
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -99,9 +108,18 @@ const AdminVoucherRequests = () => {
         { id: requestId, status: "approved", vouchersAwarded: voucherAmount },
       ]);
 
-      alert(`Voucher request approved! User's new balance: ${newBalance}`);
+      toast({
+        variant: "success",
+        title: "Voucher Request Approved",
+        description: `Voucher request has been approved. ${voucherAmount} vouchers awarded to user.`,
+      });
+      router.refresh();
     } catch (err) {
-      console.error("Error approving voucher request:", err);
+      toast({
+        variant: "destructive",
+        title: "Error approving voucher request",
+      });
+      router.refresh();
     }
   };
 
@@ -133,8 +151,19 @@ const AdminVoucherRequests = () => {
         ...prev,
         { id: requestId, status: "rejected", rejectionReason },
       ]);
+
+      toast({
+        variant: "success",
+        title: "Voucher Request Rejected",
+        description: `Voucher request has been rejected.`,
+      });
+      router.refresh();
     } catch (err) {
-      console.error("Error rejecting voucher request:", err);
+      toast({
+        variant: "destructive",
+        title: "Error rejecting voucher request",
+      });
+      router.refresh();
     }
   };
 

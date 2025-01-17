@@ -1,10 +1,11 @@
-'use server'
-
 import ProductCardList from '@/components/home/ProductCardList'
 import { HomeNavbar } from '@/components/homenavbar/HomeNavbar'
 import { db } from '@/firebase/firebaseConfig'
 import { collection, getDocs } from 'firebase/firestore'
 import React from 'react'
+
+export const dynamic = 'force-dynamic';
+export const fetchCache = "force-no-store";
 
 const page = async () => {
   async function fetchProducts() {
