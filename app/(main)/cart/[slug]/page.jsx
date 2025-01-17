@@ -1,4 +1,3 @@
-'use server'
 
 import CartCard from '@/components/cart/CartCard'
 import CartCardList from '@/components/cart/CartCardList'
@@ -9,6 +8,9 @@ import { db } from '@/firebase/firebaseConfig'
 import { getProductStockQuantity } from '@/firebase/firestore/modifyProduct'
 import { collection, getDocs } from 'firebase/firestore'
 import React from 'react'
+
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
 
 const page = async ({ params }) => {
   const { slug } = await params

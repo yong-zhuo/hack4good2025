@@ -1,18 +1,48 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
-import { ShoppingCart } from "lucide-react";
+import { Loader2, ShoppingCart } from "lucide-react";
 import { addToCart } from "@/firebase/firestore/cartFunction";
 import { useAuthContext } from "@/context/AuthContext";
 import { useToast } from "@/hooks/use-toast";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "@/firebase/firebaseConfig";
+import { useRouter } from "next/navigation";
 
 const Add = ({
     product,
 }) => {
+
+    const { user, loading } = useAuthContext();
+
+    const router = useRouter();
+
+    const { toast } = useToast();
+
     const [quantity, setQuantity] = useState(1);
 
-    const stockQuantity = product.stockQuantity;
+    const [stockQuantity, setStockQuantity] = useState(product.stockQuantity);
+
+
+
+    useEffect(() => {
+        const fetchCartData = async () => {
+            if (user) {
+                const cartDoc = doc(db, "users", user.uid, "cart", product.id);
+                const cartDocRef = await getDoc(cartDoc);
+
+                if (cartDocRef.exists()) {
+                    const cartData = cartDocRef.data();
+                    console.log(cartData)
+                    setStockQuantity(product.stockQuantity - cartData.selectedQuantity);
+                }
+            }
+        }
+
+        fetchCartData();
+    }, [user, loading, product.stockQuantity, product.id]);
+
 
     const handleQuantity = (type) => {
         if (type === "decrement" && quantity > 1) {
@@ -25,9 +55,10 @@ const Add = ({
 
     const outOfStock = stockQuantity < 1;
 
-    const { user } = useAuthContext();
+    if (user == null || loading) {
+        return <Loader2 className="animate-spin text-pri" />;
+    }
 
-    const { toast } = useToast();
 
     const handleAddToCart = async () => {
 
@@ -38,6 +69,8 @@ const Add = ({
                 description: "Please sign in to add to cart",
             })
         }
+        const previousStockQuantity = stockQuantity;
+        setStockQuantity((prev) => prev - quantity);
 
         try {
             const productToAdd = {
@@ -58,13 +91,16 @@ const Add = ({
                     description: "Product added to cart successfully",
                 });
             } else {
+                setStockQuantity(previousStockQuantity);
                 toast({
                     variant: "destructive",
                     title: "Error adding item to cart",
                     description: "An unexpected error occurred. Please try again.",
                 })
             }
+            router.refresh();
         } catch (error) {
+            setStockQuantity(previousStockQuantity);
             console.error('Error in handleAddToCart:', error);
             toast({
                 variant: "destructive",

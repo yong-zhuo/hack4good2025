@@ -2,7 +2,7 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
-import { Loader2 } from 'lucide-react'
+import { Loader, Loader2 } from 'lucide-react'
 import { doc, setDoc } from 'firebase/firestore'
 import { db } from '@/firebase/firebaseConfig'
 import { useState } from 'react'
@@ -40,13 +40,14 @@ const RequestList = ({ products }) => {
         }
     }
 
-    const handleReject = (data) => {
+    const handleReject = async (data) => {
+        setLoading(true)
         const orderID = data.target.value
         const orderRef = doc(db, 'orders', orderID)
-        setDoc(orderRef, {
+        await setDoc(orderRef, {
             status: 'Cancelled'
         }, { merge: true })
-
+        setLoading(false)
         router.refresh()
     }
     return (
@@ -87,8 +88,8 @@ const RequestList = ({ products }) => {
                             <TableCell>{product.price}</TableCell>
                             <TableCell>{product.quantity}</TableCell>
                             <TableCell className="flex flex-row items-center gap-x-2">
-                                <Button variant="ghost" value={product.id} onClick={handleApprove} className="hover:text-white shadow-md hover:bg-green-500 rounded-lg flex items-center justify-center bg-green-400 max-w-20 text-sec">Approve</Button>
-                                <Button variant="ghost" value={product.id} onClick={handleReject} className="hover:text-white shadow-md hover:bg-red-500 rounded-lg flex items-center justify-center bg-red-400 min-w-20  text-sec">Reject</Button>
+                                <Button variant="ghost" value={product.id} onClick={handleApprove} disabled={loading} className="hover:text-white shadow-md hover:bg-green-500 rounded-lg flex items-center justify-center bg-green-400 max-w-20 text-sec">{loading ? <Loader className='animate-spin ' height={12} /> : `Approve`}</Button>
+                                <Button variant="ghost" value={product.id} onClick={handleReject} disabled={loading} className="hover:text-white shadow-md hover:bg-red-500 rounded-lg flex items-center justify-center bg-red-400 min-w-20  text-sec">{loading ? <Loader className='animate-spin ' height={12} /> : `Reject`}</Button>
                             </TableCell>
                         </TableRow>
                     ))}
