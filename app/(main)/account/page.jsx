@@ -9,7 +9,7 @@ const page = async () => {
 
     return (
         <div>
-            <div className='text-6xl font-bold text-left mb-8 mt-4 text-pri'>
+            <div className='text-3xl font-bold text-left mb-8 mt-4 text-pri'>
                 Account
             </div>
             <div className='flex flex-col justify-center items-center'>

@@ -28,7 +28,7 @@ const page = async () => {
         <div className="h-[1px] bg-pri" />
       </div>
 
-      <div className='w-fit '>
+      <div className='w-full'>
         <ProductCardList productList={products} />
       </div>
     </div>
