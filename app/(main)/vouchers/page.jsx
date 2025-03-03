@@ -114,7 +114,7 @@ const Vouchers = () => {
   if (error) {
     return (
       <div className="">
-        <h1 className="text-6xl font-bold text-left mb-8 mt-4 text-pri">My Vouchers</h1>
+        <h1 className="text-3xl font-bold text-left mb-8 mt-4 text-pri">My Vouchers</h1>
         <div className="bg-white p-6 rounded shadow-md">
           <p className="text-lg mt-2 text-red-500">
             Error: {error}. Please try again later.
@@ -126,7 +126,7 @@ const Vouchers = () => {
 
   return (
     <div className="">
-      <h1 className="text-6xl font-bold text-left mb-8 mt-4 text-pri">My Vouchers</h1>
+      <h1 className="text-3xl font-bold text-left mb-8 mt-4 text-pri">My Vouchers</h1>
       <div className="bg-white p-6 rounded-lg shadow-md mb-8">
         <h2 className="text-xl font-semibold text-pri">Voucher Balance</h2>
         <p className="text-lg mt-2">{balance} Vouchers</p>
